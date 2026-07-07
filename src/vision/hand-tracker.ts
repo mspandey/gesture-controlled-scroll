@@ -42,7 +42,7 @@ import type {
   HandDetectionStatus,
   MediaPipeHandedness,
 } from '../shared/types';
-import { PALM_LANDMARKS, LOW_CONFIDENCE_WARNING_DELAY_MS, MEDIAPIPE_BASE_PATH, DEBUG } from '../shared/constants';
+import { LANDMARK, LOW_CONFIDENCE_WARNING_DELAY_MS, MEDIAPIPE_BASE_PATH, DEBUG } from '../shared/constants';
 
 /** Gated debug logger. */
 function dbg(...args: unknown[]): void {
@@ -358,18 +358,18 @@ export class HandTracker {
     // Reset low-confidence timer.
     this._lowConfidenceSince = null;
 
-    // --- Compute palm centroid Y ---
+    // --- Compute tracked point Y ---
     const lm = landmarks[selectedIdx];
     this._lastLandmarks = lm;
     this._lastHandedness = handedness[selectedIdx]?.label ?? null;
 
-    const palmY = this._computePalmCentroidY(lm);
-    const smoothedY = this._emaFilter.update(palmY);
+    const trackedY = this._computeTrackedPointY(lm);
+    const smoothedY = this._emaFilter.update(trackedY);
 
     // ── STEP 5: Log raw and smoothed Y every 30th result ────────────────
     if (DEBUG && this._frameCount % 30 === 1) {
       dbg(`STEP 5 — Hand detected. confidence=${confidence.toFixed(3)} `
-          + `rawPalmY=${palmY.toFixed(4)} smoothedY=${smoothedY.toFixed(4)} `
+          + `rawTrackedY=${trackedY.toFixed(4)} smoothedY=${smoothedY.toFixed(4)} `
           + `handedness=${handedness[selectedIdx]?.label} fps=${fps.toFixed(1)}`);
     }
 
@@ -458,18 +458,13 @@ export class HandTracker {
   }
 
   /**
-   * Computes the average Y coordinate of the palm landmark set.
-   * Using multiple palm landmarks is more stable than the wrist alone.
+   * Computes the Y coordinate of the tracked point (index finger tip).
    *
    * @param landmarks - Full 21-landmark array for one hand.
-   * @returns Normalised Y coordinate of the palm centroid (0–1).
+   * @returns Normalised Y coordinate of the index finger tip (0–1).
    */
-  private _computePalmCentroidY(landmarks: NormalizedLandmark[]): number {
-    let sum = 0;
-    for (const idx of PALM_LANDMARKS) {
-      sum += landmarks[idx]?.y ?? 0;
-    }
-    return sum / PALM_LANDMARKS.length;
+  private _computeTrackedPointY(landmarks: NormalizedLandmark[]): number {
+    return landmarks[LANDMARK.INDEX_TIP]?.y ?? 0;
   }
 
   /**

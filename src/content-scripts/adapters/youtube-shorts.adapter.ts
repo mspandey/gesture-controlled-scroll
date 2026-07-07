@@ -45,7 +45,7 @@ export class YouTubeShortsAdapter implements PlatformAdapter {
    */
   goToNext(): void {
     if (this._clickNativeButton('next')) return;
-    if (this._dispatchKey('ArrowDown')) return;
+    this._dispatchKey('ArrowDown');
     this._scrollFeed(1);
   }
 
@@ -55,7 +55,7 @@ export class YouTubeShortsAdapter implements PlatformAdapter {
    */
   goToPrevious(): void {
     if (this._clickNativeButton('previous')) return;
-    if (this._dispatchKey('ArrowUp')) return;
+    this._dispatchKey('ArrowUp');
     this._scrollFeed(-1);
   }
 
@@ -129,7 +129,7 @@ export class YouTubeShortsAdapter implements PlatformAdapter {
    * keyboard navigation for Shorts.
    *
    * @param key - The keyboard key name to dispatch.
-   * @returns true (always succeeds — we cannot detect if YT handled it).
+   * @returns false (best-effort, let fallback run).
    */
   private _dispatchKey(key: 'ArrowDown' | 'ArrowUp'): boolean {
     // Dispatch on document.body first (where YT attaches listeners),
@@ -151,7 +151,7 @@ export class YouTubeShortsAdapter implements PlatformAdapter {
         })
       );
     }
-    return true;
+    return false;
   }
 
   /**

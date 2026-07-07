@@ -44,7 +44,7 @@ export class InstagramReelsAdapter implements PlatformAdapter {
    */
   goToNext(): void {
     if (this._clickNativeButton('next')) return;
-    if (this._dispatchKey('ArrowDown')) return;
+    this._dispatchKey('ArrowDown');
     this._scrollFeed(1);
   }
 
@@ -53,7 +53,7 @@ export class InstagramReelsAdapter implements PlatformAdapter {
    */
   goToPrevious(): void {
     if (this._clickNativeButton('previous')) return;
-    if (this._dispatchKey('ArrowUp')) return;
+    this._dispatchKey('ArrowUp');
     this._scrollFeed(-1);
   }
 
@@ -136,7 +136,7 @@ export class InstagramReelsAdapter implements PlatformAdapter {
    * Dispatches a keyboard event for Instagram's Reels keyboard navigation.
    *
    * @param key - The keyboard key to simulate.
-   * @returns true (always).
+   * @returns false (let fallback run).
    */
   private _dispatchKey(key: 'ArrowDown' | 'ArrowUp'): boolean {
     const targets: EventTarget[] = [document, document.body];
@@ -155,7 +155,7 @@ export class InstagramReelsAdapter implements PlatformAdapter {
         })
       );
     }
-    return true;
+    return false;
   }
 
   /**
