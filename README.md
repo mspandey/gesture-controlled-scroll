@@ -57,6 +57,3 @@ A Chrome Extension for hands-free navigation on YouTube Shorts & Instagram Reels
 - **esbuild** for fast compilation and bundling.
 
 ---
-<div align="center">
-Made with ❤️ by [mspandey](https://github.com/mspandey)
-</div>
