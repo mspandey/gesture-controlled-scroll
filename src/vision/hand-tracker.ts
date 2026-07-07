@@ -67,6 +67,7 @@ interface HandsResults {
 }
 
 interface HandsOptions {
+  selfieMode?: boolean;
   maxNumHands: number;
   modelComplexity: 0 | 1;
   minDetectionConfidence: number;
@@ -103,7 +104,6 @@ export class HandTracker {
   private _fpsCounter: FPSCounter;
   private _stateMachine: GestureStateMachine;
   private _settings: ExtensionSettings;
-  private _onGesture: HandTrackerGestureCallback;
   private _onStatus: HandTrackerStatusCallback;
 
   private _running: boolean = false;
@@ -117,7 +117,6 @@ export class HandTracker {
 
   /** The most recent landmark set, exposed for canvas overlay rendering. */
   private _lastLandmarks: NormalizedLandmark[] | null = null;
-  private _lastHandedness: MediaPipeHandedness | null = null;
 
   /** Cached overlay canvas for options page preview. */
   private _overlayCanvas: HTMLCanvasElement | null = null;
@@ -133,7 +132,6 @@ export class HandTracker {
     onStatus: HandTrackerStatusCallback
   ) {
     this._settings = settings;
-    this._onGesture = onGesture;
     this._onStatus = onStatus;
 
     this._emaFilter = new EMAFilter(settings.smoothingFactor);
@@ -362,7 +360,6 @@ export class HandTracker {
     // --- Compute tracked point Y ---
     const lm = landmarks[selectedIdx];
     this._lastLandmarks = lm;
-    this._lastHandedness = handedness[selectedIdx]?.label ?? null;
 
     const trackedY = this._computeTrackedPointY(lm);
     const smoothedY = this._emaFilter.update(trackedY);
@@ -608,5 +605,4 @@ export class HandTracker {
   }
 }
 
-// Re-export for use in the HandDetectionStatus type guard in reporting.
-type HandDetectionStatus = import('../shared/types').HandDetectionStatus;
+

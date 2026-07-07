@@ -119,14 +119,19 @@ export interface ExtensionSettings {
   enabled: boolean;
 
   /**
-   * Dot product threshold for vertical pointing.
+   * Minimum normalised Y displacement to register a gesture.
    */
-  pointingThreshold: number;
+  motionThreshold: number;
 
   /**
-   * Time window in milliseconds to hold the pointing gesture.
+   * Time window in ms within which displacement must occur.
    */
-  pointingHoldMs: number;
+  motionWindowMs: number;
+
+  /**
+   * Cooldown period in ms after a gesture fires.
+   */
+  cooldownMs: number;
 
   /**
    * Continuous scroll speed.

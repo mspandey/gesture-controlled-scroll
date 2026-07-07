@@ -425,7 +425,7 @@ function startPreviewLoop(): void {
             for (const lm of lms) {
               ctx.beginPath();
               ctx.arc(lm.x * w, lm.y * h, 5, 0, Math.PI * 2);
-              ctx.fillStyle = PALM_LANDMARKS.includes(lms.indexOf(lm)) ? 'rgba(252,211,77,0.95)' : 'rgba(248,250,252,0.85)';
+              ctx.fillStyle = (PALM_LANDMARKS as readonly number[]).includes(lms.indexOf(lm)) ? 'rgba(252,211,77,0.95)' : 'rgba(248,250,252,0.85)';
               ctx.fill();
             }
           });
