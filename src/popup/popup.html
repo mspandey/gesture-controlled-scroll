@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GestureScroll</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup-container" id="popup-root">
+
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+            <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/>
+            <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/>
+            <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+          </svg>
+        </div>
+        <span class="brand-name">GestureScroll</span>
+      </div>
+
+      <!-- Master toggle -->
+      <label class="toggle-switch" id="toggle-label" aria-label="Enable or disable GestureScroll">
+        <input type="checkbox" id="master-toggle" role="switch" aria-checked="false" />
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+      </label>
+    </header>
+
+    <!-- Platform badge -->
+    <div class="platform-badge" id="platform-badge" aria-live="polite">
+      <span class="platform-dot" id="platform-dot"></span>
+      <span id="platform-label">Detecting page…</span>
+    </div>
+
+    <!-- Status grid -->
+    <div class="status-grid">
+
+      <div class="status-card" id="camera-card">
+        <div class="status-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 7 16 12 23 17z"/>
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+          </svg>
+        </div>
+        <div class="status-card-content">
+          <div class="status-card-label">Camera</div>
+          <div class="status-card-value" id="camera-status">—</div>
+        </div>
+        <div class="status-indicator" id="camera-indicator"></div>
+      </div>
+
+      <div class="status-card" id="gesture-card">
+        <div class="status-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            <rect x="1" y="11" width="22" height="11" rx="2" ry="2"/>
+            <path d="M12 12v4"/>
+          </svg>
+        </div>
+        <div class="status-card-content">
+          <div class="status-card-label">Gesture</div>
+          <div class="status-card-value" id="gesture-status">None</div>
+        </div>
+        <div class="gesture-arrow" id="gesture-arrow" aria-hidden="true"></div>
+      </div>
+
+    </div>
+
+    <!-- Confidence meter -->
+    <div class="metric-row" id="confidence-row">
+      <div class="metric-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Confidence
+      </div>
+      <div class="meter-bar">
+        <div class="meter-fill" id="confidence-fill" style="width: 0%"></div>
+      </div>
+      <div class="metric-value" id="confidence-value">—</div>
+    </div>
+
+    <!-- FPS meter -->
+    <div class="metric-row" id="fps-row">
+      <div class="metric-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        FPS
+      </div>
+      <div class="meter-bar">
+        <div class="meter-fill" id="fps-fill" style="width: 0%"></div>
+      </div>
+      <div class="metric-value" id="fps-value">—</div>
+    </div>
+
+    <!-- Error / info message -->
+    <div class="message-box" id="message-box" role="alert" aria-live="assertive" hidden>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span id="message-text"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <button id="open-settings-btn" class="settings-btn" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M21 12A9 9 0 1 1 3 12"/>
+          <path d="m14 9-2 2-2-2"/>
+        </svg>
+        Settings
+      </button>
+      <span class="privacy-badge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        100% On-Device
+      </span>
+    </footer>
+
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

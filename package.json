@@ -1,0 +1,21 @@
+{
+  "name": "gesture-scroll",
+  "version": "1.0.0",
+  "description": "Hands-free YouTube Shorts & Instagram Reels navigator using on-device hand gesture recognition",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "clean": "node -e \"const fs=require('fs');const path=require('path');if(fs.existsSync('dist')){fs.rmSync('dist',{recursive:true})}fs.mkdirSync('dist',{recursive:true});\""
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "esbuild": "^0.20.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@mediapipe/hands": "^0.4.1675469240",
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "@mediapipe/drawing_utils": "^0.3.1675466124"
+  }
+}

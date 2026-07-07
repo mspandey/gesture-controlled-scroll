@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output — load dist/ as the unpacked Chrome extension, NOT the project root
+dist/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp

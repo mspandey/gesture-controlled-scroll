@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GestureScroll — Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+
+  <div class="page-layout">
+
+    <!-- Sidebar navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+            <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/>
+            <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/>
+            <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">GestureScroll</div>
+          <div class="brand-version" id="ext-version">v1.0.0</div>
+        </div>
+      </div>
+
+      <ul class="nav-list" role="tablist">
+        <li><a href="#gesture" class="nav-link active" role="tab" aria-selected="true">🤙 Gesture Detection</a></li>
+        <li><a href="#camera" class="nav-link" role="tab">📷 Camera</a></li>
+        <li><a href="#advanced" class="nav-link" role="tab">⚙️ Advanced</a></li>
+        <li><a href="#preview" class="nav-link" role="tab">👁 Live Preview</a></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="privacy-note">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          100% On-Device · Zero Data Collection
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1>Settings</h1>
+        <p class="page-subtitle">Adjust GestureScroll to match your environment and preferences.</p>
+        <div class="header-actions">
+          <button id="reset-btn" class="btn btn-ghost" type="button">↺ Reset to Defaults</button>
+          <div class="save-status" id="save-status" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <!-- ─────── GESTURE DETECTION SECTION ─────── -->
+      <section class="settings-section" id="gesture" data-section="gesture">
+        <div class="section-header">
+          <h2>Gesture Detection</h2>
+          <p>Control how sensitive and responsive gesture recognition is.</p>
+        </div>
+
+        <div class="settings-group">
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="motion-threshold">Motion Sensitivity</label>
+              <p class="setting-desc">How far your hand must move (in the camera frame) to trigger navigation. Lower = more sensitive.</p>
+            </div>
+            <div class="setting-control">
+              <input type="range" id="motion-threshold" min="0.01" max="0.20" step="0.005" value="0.06" />
+              <span class="range-value" id="motion-threshold-value">6%</span>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="motion-window">Motion Window</label>
+              <p class="setting-desc">Time window (ms) in which your hand must complete the gesture motion.</p>
+            </div>
+            <div class="setting-control">
+              <input type="range" id="motion-window" min="200" max="1500" step="50" value="600" />
+              <span class="range-value" id="motion-window-value">600ms</span>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="cooldown">Cooldown</label>
+              <p class="setting-desc">Pause between successive gesture actions to prevent accidental rapid scrolling.</p>
+            </div>
+            <div class="setting-control">
+              <input type="range" id="cooldown" min="300" max="3000" step="100" value="1000" />
+              <span class="range-value" id="cooldown-value">1000ms</span>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="smoothing">Smoothing Factor</label>
+              <p class="setting-desc">Reduces jitter. Lower values are smoother but slower to respond. (EMA α)</p>
+            </div>
+            <div class="setting-control">
+              <input type="range" id="smoothing" min="0.05" max="1.0" step="0.05" value="0.3" />
+              <span class="range-value" id="smoothing-value">0.30</span>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="handedness">Preferred Hand</label>
+              <p class="setting-desc">Which hand to track for gestures.</p>
+            </div>
+            <div class="setting-control">
+              <select id="handedness" class="select-field">
+                <option value="EITHER">Either Hand</option>
+                <option value="LEFT">Left Hand Only</option>
+                <option value="RIGHT">Right Hand Only</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="require-single-hand">Require Single Hand</label>
+              <p class="setting-desc">Only register gestures when exactly one hand is visible. Reduces ambiguity in multi-hand scenarios.</p>
+            </div>
+            <div class="setting-control">
+              <label class="toggle-switch">
+                <input type="checkbox" id="require-single-hand" role="switch" />
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─────── CAMERA SECTION ─────── -->
+      <section class="settings-section" id="camera" data-section="camera">
+        <div class="section-header">
+          <h2>Camera</h2>
+          <p>Configure webcam resolution and detection quality thresholds.</p>
+        </div>
+
+        <div class="settings-group">
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="min-detection-confidence">Min. Detection Confidence</label>
+              <p class="setting-desc">Minimum confidence score for MediaPipe to report a hand detection as valid.</p>
+            </div>
+            <div class="setting-control">
+              <input type="range" id="min-detection-confidence" min="0.1" max="1.0" step="0.05" value="0.7" />
+              <span class="range-value" id="min-detection-confidence-value">70%</span>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="min-tracking-confidence">Min. Tracking Confidence</label>
+              <p class="setting-desc">Minimum confidence score for MediaPipe to continue tracking a previously detected hand.</p>
+            </div>
+            <div class="setting-control">
+              <input type="range" id="min-tracking-confidence" min="0.1" max="1.0" step="0.05" value="0.5" />
+              <span class="range-value" id="min-tracking-confidence-value">50%</span>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label">Camera Resolution</label>
+              <p class="setting-desc">Higher resolution may improve detection accuracy at the cost of more CPU usage.</p>
+            </div>
+            <div class="setting-control">
+              <select id="camera-resolution" class="select-field">
+                <option value="320x240">320 × 240 (Low)</option>
+                <option value="640x480" selected>640 × 480 (Recommended)</option>
+                <option value="1280x720">1280 × 720 (High)</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─────── ADVANCED SECTION ─────── -->
+      <section class="settings-section" id="advanced" data-section="advanced">
+        <div class="section-header">
+          <h2>Advanced</h2>
+          <p>Developer and diagnostic options.</p>
+        </div>
+
+        <div class="settings-group">
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="debug-mode">Debug Mode</label>
+              <p class="setting-desc">Enable verbose console logging. Logs are local only — nothing is sent anywhere.</p>
+            </div>
+            <div class="setting-control">
+              <label class="toggle-switch">
+                <input type="checkbox" id="debug-mode" role="switch" />
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─────── LIVE PREVIEW SECTION ─────── -->
+      <section class="settings-section" id="preview" data-section="preview">
+        <div class="section-header">
+          <h2>Live Camera Preview</h2>
+          <p>See your camera feed with hand landmark overlay to calibrate your setup and verify detection is working correctly.</p>
+        </div>
+
+        <div class="preview-container">
+          <div class="preview-viewport" id="preview-viewport">
+            <video id="preview-video" autoplay playsinline muted></video>
+            <canvas id="preview-canvas"></canvas>
+            <div class="preview-overlay-text" id="preview-status-text">
+              Press "Start Preview" to begin
+            </div>
+          </div>
+
+          <div class="preview-controls">
+            <button id="preview-start-btn" class="btn btn-primary" type="button">▶ Start Preview</button>
+            <button id="preview-stop-btn" class="btn btn-ghost" type="button" disabled>■ Stop Preview</button>
+            <div class="preview-metrics" id="preview-metrics">
+              <span class="metric-chip" id="preview-fps">FPS: —</span>
+              <span class="metric-chip" id="preview-confidence">Confidence: —</span>
+              <span class="metric-chip" id="preview-hand">Hand: —</span>
+            </div>
+          </div>
+
+          <div class="preview-tip">
+            <strong>Tip:</strong> Hold your hand in view and move it slowly up or down. The green skeleton and yellow dots confirm detection. Ensure adequate lighting and avoid cluttered backgrounds.
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>
