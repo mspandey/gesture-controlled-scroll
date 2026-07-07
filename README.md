@@ -1,8 +1,8 @@
 <div align="center">
 # Gesture Controlled Scroll 🖐️
-
-
-
+<div>
+<img> https://user-images.githubusercontent.com/74038190/212750147-854a394f-fee9-4080-9770-78a4b7ece53f.gif </img>
+</div>
 A Chrome Extension for hands-free navigation on YouTube Shorts & Instagram Reels using on-device hand gesture recognition!
 </div>
 
