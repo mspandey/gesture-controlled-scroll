@@ -15,9 +15,7 @@ A Chrome Extension for hands-free navigation on YouTube Shorts & Instagram Reels
 - **Low Latency & High Accuracy**: Smooth EMA filtering and a robust state machine for responsive gesture detection.
 - **Privacy-First**: Operates seamlessly without needing server-side processing, ensuring your privacy.
 
-<div align="center">
-<img src="https://user-images.githubusercontent.com/74038190/212284068-b4ee9a5c-331c-4d18-9481-53dd6b9debd5.gif" width="200">
-</div>
+
 
 ## 🛠️ Installation
 
