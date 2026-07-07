@@ -1,7 +1,6 @@
 <div align="center">
 # Gesture Controlled Scroll 🖐️
 
-<img src="https://user-images.githubusercontent.com/74038190/212749695-a6817c5a-a794-462b-afca-1b5ce7dd5e63.gif" width="500">
 
 A Chrome Extension for hands-free navigation on YouTube Shorts & Instagram Reels using on-device hand gesture recognition!
 </div>
@@ -15,9 +14,7 @@ A Chrome Extension for hands-free navigation on YouTube Shorts & Instagram Reels
 - **Low Latency & High Accuracy**: Smooth EMA filtering and a robust state machine for responsive gesture detection.
 - **Privacy-First**: Operates seamlessly without needing server-side processing, ensuring your privacy.
 
-<div align="center">
-<img src="https://user-images.githubusercontent.com/74038190/212284068-b4ee9a5c-331c-4d18-9481-53dd6b9debd5.gif" width="200">
-</div>
+
 ## 🛠️ Installation
 
 1. **Clone the repository:**
@@ -56,6 +53,3 @@ A Chrome Extension for hands-free navigation on YouTube Shorts & Instagram Reels
 - **esbuild** for fast compilation and bundling.
 
 ---
-<div align="center">
-Made with ❤️ by [mspandey](https://github.com/mspandey)
-</div>
