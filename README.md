@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/74038190/212281780-0afd9616-8310-46e9-a898-c4f5269f1387.gif" width="100">
+  
   <h1>GestureScroll</h1>
   <p><b>A privacy-first, on-device Chrome Extension for hands-free navigation of YouTube Shorts and Instagram Reels using hand gestures.</b></p>
   <img src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/assets/74038190/0db32290-c193-4b32-95dc-413ce9e446a5" width="400">
@@ -14,7 +14,7 @@
 - **Platform Agnostic Architecture:** Designed with a platform adapter pattern to easily support new video feeds (e.g. TikTok) in the future.
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/74038190/235224431-e8c8c12e-6826-47f1-89fb-2ddad83b3abf.gif" width="400">
+ 
 </div>
 
 ---
