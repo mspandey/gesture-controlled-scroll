@@ -15,6 +15,7 @@
 import type { PlatformAdapter } from './platform-adapter.interface';
 import { YouTubeShortsAdapter } from './youtube-shorts.adapter';
 import { InstagramReelsAdapter } from './instagram-reels.adapter';
+import { GenericScrollAdapter } from './generic-scroll.adapter';
 
 /**
  * Ordered list of all registered platform adapters.
@@ -30,6 +31,9 @@ const ADAPTERS: PlatformAdapter[] = [
   //   new TikTokAdapter(),       // src/content-scripts/adapters/tiktok.adapter.ts
   //   new FacebookReelsAdapter(), // src/content-scripts/adapters/facebook-reels.adapter.ts
   // ─────────────────────────────────────────────────────────
+  
+  // Generic fallback must be last
+  new GenericScrollAdapter(),
 ];
 
 /**

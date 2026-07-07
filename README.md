@@ -3,14 +3,14 @@
    Gesture Controlled Scroll 🖐️
 
 
-A Chrome Extension for hands-free navigation on YouTube Shorts & Instagram Reels using on-device hand gesture recognition!
+A Chrome Extension for hands-free navigation on YouTube Shorts, Instagram Reels, and ALL other websites using on-device hand gesture recognition!
 </div>
 
 ---
 
 ## 🚀 Features
 
-- **Hands-Free Scrolling**: Navigate through YouTube Shorts and Instagram Reels just by moving your pointer finger!
+- **Hands-Free Scrolling**: Navigate through YouTube Shorts, Instagram Reels, and vertically scroll any website just by moving your pointer finger!
 - **On-Device Processing**: Powered by MediaPipe, all gesture recognition happens locally in your browser. No images are sent to the cloud.
 - **Low Latency & High Accuracy**: Smooth EMA filtering and a robust state machine for responsive gesture detection.
 - **Privacy-First**: Operates seamlessly without needing server-side processing, ensuring your privacy.
@@ -44,7 +44,7 @@ A Chrome Extension for hands-free navigation on YouTube Shorts & Instagram Reels
 1. Click on the extension icon to open the popup.
 2. Toggle **Enable Gesture Scroll** to turn on the extension.
 3. Choose your preferred **Handedness** (Right, Left, or Either).
-4. **Point your index finger up** to scroll up, and **point your index finger down** to scroll down on YouTube Shorts or Instagram Reels.
+4. **Point your index finger up** to scroll up, and **point your index finger down** to scroll down on any supported feed or generic webpage.
 5. Watch the magic happen!
 
 ## 🔧 Tech Stack
