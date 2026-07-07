@@ -210,8 +210,19 @@ export class GestureStateMachine {
     }
 
     if (Math.abs(displacement) >= this._config.motionThreshold) {
-      const direction: GestureDirection = displacement < 0 ? 'UP' : 'DOWN';
-      this._fireGesture(direction, smoothedY, now);
+      const safeElapsed = Math.max(elapsed, 1);
+      const velocity = (Math.abs(displacement) / safeElapsed) * 1000; // Normalised units per second
+
+      // Require a fast "jerk" motion (e.g. > 0.4 units/sec)
+      if (velocity >= 0.4) {
+        const direction: GestureDirection = displacement < 0 ? 'UP' : 'DOWN';
+        this._fireGesture(direction, smoothedY, now);
+      } else {
+        // Exceeded threshold but was too slow (casual movement).
+        // Roll the anchor forward to ignore this slow drift.
+        this._anchorY = smoothedY;
+        this._anchorTime = now;
+      }
     }
   }
 

@@ -341,6 +341,7 @@ async function loadPreviewHands(settings: ExtensionSettings): Promise<void> {
     locateFile: (file: string) => chrome.runtime.getURL(`${MEDIAPIPE_BASE_PATH}${file}`),
   });
   _previewHands.setOptions({
+    selfieMode: true,
     maxNumHands: 2,
     modelComplexity: 1,
     minDetectionConfidence: settings.minDetectionConfidence,

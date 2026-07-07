@@ -119,24 +119,19 @@ export interface ExtensionSettings {
   enabled: boolean;
 
   /**
-   * Minimum normalised vertical displacement (in MediaPipe's 0–1 coordinate
-   * space) that the reference landmark must travel within the time window
-   * to register as an intentional gesture. Higher = less sensitive.
-   * Typical range: 0.02 – 0.15.
+   * Dot product threshold for vertical pointing.
    */
-  motionThreshold: number;
+  pointingThreshold: number;
 
   /**
-   * Time window in milliseconds within which the motion threshold must be
-   * exceeded for a gesture to register.
+   * Time window in milliseconds to hold the pointing gesture.
    */
-  motionWindowMs: number;
+  pointingHoldMs: number;
 
   /**
-   * Cooldown period in milliseconds after a gesture fires. No new gestures
-   * will be accepted during this window.
+   * Continuous scroll speed.
    */
-  cooldownMs: number;
+  scrollSpeed: number;
 
   /** Exponential smoothing factor α ∈ (0, 1]. Lower = smoother but laggier. */
   smoothingFactor: number;

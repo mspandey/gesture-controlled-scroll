@@ -50,6 +50,13 @@ const messageBox = $('message-box');
 const messageText = $('message-text');
 const openSettingsBtn = $('open-settings-btn');
 
+const cameraPreviewContainer = $('camera-preview-container');
+const popupVideo = $<HTMLVideoElement>('popup-video');
+const previewGestureOverlay = $('camera-preview-overlay');
+const previewGestureText = $('preview-gesture-text');
+
+let popupStream: MediaStream | null = null;
+
 // ============================================================
 // STARTUP
 // ============================================================
@@ -90,6 +97,10 @@ async function init(): Promise<void> {
   // Fall back to cached state from background service worker.
   const cachedState = await requestCachedState();
   renderState(cachedState ?? DEFAULT_RUNTIME_STATE);
+
+  if (_enabled) {
+    startPopupCamera();
+  }
 }
 
 // ============================================================
@@ -127,6 +138,9 @@ async function onToggleChange(): Promise<void> {
       confidence: 0,
       fps: 0,
     });
+    stopPopupCamera();
+  } else {
+    startPopupCamera();
   }
 }
 
@@ -217,12 +231,19 @@ function renderGesture(direction: GestureDirection): void {
     gestureStatus.classList.add('value--green');
     gestureArrow.classList.add('arrow--up');
     gestureArrow.textContent = '↑';
+
+    previewGestureText.textContent = 'UP ↑';
+    previewGestureOverlay.className = 'camera-preview-overlay active up';
   } else if (direction === 'DOWN') {
     gestureStatus.classList.add('value--green');
     gestureArrow.classList.add('arrow--down');
     gestureArrow.textContent = '↓';
+
+    previewGestureText.textContent = 'DOWN ↓';
+    previewGestureOverlay.className = 'camera-preview-overlay active down';
   } else {
     gestureArrow.textContent = '';
+    previewGestureOverlay.className = 'camera-preview-overlay';
   }
 }
 
@@ -301,6 +322,39 @@ function renderMessage(state: RuntimeState): void {
   } else {
     messageBox.hidden = true;
   }
+}
+
+// ============================================================
+// CAMERA STREAM
+// ============================================================
+
+async function startPopupCamera(): Promise<void> {
+  if (popupStream) return; // Already running
+
+  cameraPreviewContainer.hidden = false;
+  try {
+    popupStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: { ideal: 320 },
+        height: { ideal: 240 },
+        facingMode: 'user',
+      },
+      audio: false,
+    });
+    popupVideo.srcObject = popupStream;
+  } catch (err) {
+    console.error('[GestureScroll Popup] Failed to get camera preview:', err);
+    cameraPreviewContainer.hidden = true;
+  }
+}
+
+function stopPopupCamera(): void {
+  if (popupStream) {
+    popupStream.getTracks().forEach((track) => track.stop());
+    popupStream = null;
+    popupVideo.srcObject = null;
+  }
+  cameraPreviewContainer.hidden = true;
 }
 
 // ============================================================

@@ -40,14 +40,14 @@ export const STORAGE_KEY_RUNTIME_STATE = 'gestureScroll_runtimeState';
  */
 export const DEFAULT_SETTINGS: ExtensionSettings = {
   enabled: true,
-  motionThreshold: 0.06,       // Normalised Y-displacement (0–1) required
-  motionWindowMs: 600,          // Time window to achieve displacement
-  cooldownMs: 1000,             // Post-gesture lockout
-  smoothingFactor: 0.3,         // EMA alpha — lower is smoother/slower
+  pointingThreshold: 0.78,       // Dot product threshold for vertical pointing
+  pointingHoldMs: 220,          // Hold duration for pointing
+  scrollSpeed: 10,             // Continuous scroll speed
+  smoothingFactor: 0.4,         // EMA alpha (0-1)
   handedness: 'EITHER',
-  minDetectionConfidence: 0.7,
-  minTrackingConfidence: 0.5,
-  requireSingleHand: false,
+  minDetectionConfidence: 0.6,
+  minTrackingConfidence: 0.6,
+  requireSingleHand: true,
   debugMode: false,
   cameraWidth: 640,
   cameraHeight: 480,
